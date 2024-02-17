@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "frontend-ingress"
+  namespace: default
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: eks-demo-group
+    alb.ingress.kubernetes.io/group.order: '3'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    #spoke1
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:134319464995:certificate/c3c1ea9d-5490-4ac2-90e5-024566696112
+    #spoke2
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:134319464995:certificate/3dcda58e-9868-40df-b6d6-a16e8227b7f2
+    #spoke 1 and 2
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:134319464995:certificate/16399947-f045-40cb-89ee-f2a251f30710
+    # 2 certificates
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:134319464995:certificate/16399947-f045-40cb-89ee-f2a251f30710,arn:aws:acm:us-west-2:134319464995:certificate/3dcda58e-9868-40df-b6d6-a16e8227b7f2
+    
+    
+    
+spec:
+  ingressClassName: alb
+  rules:
+    - host: test1.run.predix.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: "demo-frontend"
+                port:
+                  number: 80
