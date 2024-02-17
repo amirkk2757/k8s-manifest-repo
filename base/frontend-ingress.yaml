@@ -24,7 +24,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: test1.run.predix.io
+    - host: test.spoke1.dev.usw02.sbx.15.energy
       http:
         paths:
           - path: /
